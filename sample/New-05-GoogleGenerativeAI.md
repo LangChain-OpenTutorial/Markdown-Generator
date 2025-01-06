@@ -1,19 +1,19 @@
 <style>
-    .custom {
-        background-color: #008d8d;
-        color: white;
-        padding: 0.25em 0.5em 0.25em 0.5em;
-        white-space: pre-wrap;       /* css-3 */
-        white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-        white-space: -pre-wrap;      /* Opera 4-6 */
-        white-space: -o-pre-wrap;    /* Opera 7 */
-        word-wrap: break-word;
-    }
+.custom {
+    background-color: #008d8d;
+    color: white;
+    padding: 0.25em 0.5em 0.25em 0.5em;
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;
+}
 
-    pre {
-        background-color: #027c7c;
-        padding-left: 0.5em;
-    }
+pre {
+    background-color: #027c7c;
+    padding-left: 0.5em;
+}
 </style>
 
 # Google Generative AI
@@ -43,6 +43,7 @@ You can use the `ChatGoogleGenerativeAI` class from the [langchain-google-genai]
 - [LangChain ChatGoogleGenerativeAI Reference](https://python.langchain.com/docs/integrations/chat/google_generative_ai/)
 
 ----
+
 ## Environment Setup
 
 Set up the environment. You may refer to [Environment Setup](https://wikidocs.net/257836) for more details.
@@ -51,10 +52,12 @@ Set up the environment. You may refer to [Environment Setup](https://wikidocs.ne
 - `langchain-opentutorial` is a package that provides a set of easy-to-use environment setup, useful functions and utilities for tutorials.
 - You can checkout the [`langchain-opentutorial`](https://github.com/LangChain-OpenTutorial/langchain-opentutorial-pypi) for more details.
 
+
 ```python
 %%capture --no-stderr
 !pip install langchain-opentutorial
 ```
+
 
 ```python
 # Install required packages
@@ -70,6 +73,7 @@ package.install(
 )
 ```
 
+
 ```python
 # Set environment variables
 from langchain_opentutorial import set_env
@@ -84,23 +88,32 @@ set_env(
     }
 )
 ```
-<pre class="custom">Environment variables have been set successfully.
-</pre>
+
+    Environment variables have been set successfully.
+
 
 ## Create API Key
 
 - Please create an API KEY from [link](https://aistudio.google.com/app/apikey?hl=en).
 - Set the user's Google API key as the environment variable `GOOGLE_API_KEY`.
+
 You can alternatively set `GOOGLE_API_KEY` in `.env` file and load it.
 
 [Note] This is not necessary if you've already set `GOOGLE_API_KEY` in previous steps.
+
 
 ```python
 from dotenv import load_dotenv
 
 load_dotenv(override=True)
 ```
-<pre class="custom">True</pre>
+
+
+
+
+    True
+
+
 
 ## ChatGoogleGenerativeAI
 
@@ -111,6 +124,7 @@ The `ChatGoogleGenerativeAI` class is used to implement conversational AI system
 Because the `ChatGoogleGenerativeAI` class is integrated with the LangChain framework, it can be used alongside other LangChain components.
 
 For information about supported models, see: https://ai.google.dev/gemini-api/docs/models/gemini?hl=en
+
 
 ```python
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -125,8 +139,9 @@ answer = llm.stream("Please explain about Langchain(in three lines)")
 for token in answer:
     print(token.content, end="", flush=True)
 ```
-<pre class="custom">LangChain is a framework for developing applications powered by large language models (LLMs).  It simplifies building applications by connecting LLMs to other sources of data and computation.  This enables creation of sophisticated chains of prompts and actions, going beyond single LLM calls.
-</pre>
+
+    LangChain is a framework for developing applications powered by large language models (LLMs).  It simplifies building applications by connecting LLMs to other sources of data and computation.  This enables creation of sophisticated chains of prompts and actions, going beyond single LLM calls.
+
 
 
 ```python
@@ -146,13 +161,15 @@ chain = prompt | model
 response = chain.invoke({"question": "Apple"})
 print(response.content)
 ```
-<pre class="custom">Yes
 
-</pre>
+    Yes
+
+
 
 ## Safety Settings
 
 Gemini models have default safety settings that can be overridden. If you are receiving lots of "Safety Warnings" from your models, you can try tweaking the `safety_settings` attribute of the model. For example, to turn off safety blocking for dangerous content, you can construct your LLM as follows:
+
 
 ```python
 from langchain_google_genai import (
@@ -177,52 +194,54 @@ llm = ChatGoogleGenerativeAI(
 response = llm.invoke("Please explain about Gemini model")
 print(response.content)
 ```
-<pre class="custom">Gemini is Google's large multimodal AI model, designed to handle various types of information, including text, code, audio, and images.  It's positioned as a competitor to OpenAI's GPT models and aims to be a more versatile and powerful tool.  Here's a breakdown of key aspects:
 
-**Key Features and Capabilities:**
+    Gemini is Google's large multimodal AI model, designed to handle various types of information, including text, code, audio, and images.  It's positioned as a competitor to OpenAI's GPT models and aims to be a more versatile and powerful tool.  Here's a breakdown of key aspects:
 
-* **Multimodality:** This is a crucial differentiator.  Gemini can understand and generate responses across different modalities, unlike models primarily focused on text.  This means it can process and create text, translate languages, write different kinds of creative content, and answer your questions in an informative way, even if they are open ended, challenging, or strange.  It can also analyze images and potentially other forms of data in the future.
+    **Key Features and Capabilities:**
 
-* **Reasoning and Problem-Solving:** Google emphasizes Gemini's improved reasoning abilities compared to previous models.  This allows it to tackle more complex tasks and provide more accurate and nuanced answers.
+    * **Multimodality:** This is a crucial differentiator.  Gemini can understand and generate responses across different modalities, unlike models primarily focused on text.  This means it can process and create text, translate languages, write different kinds of creative content, and answer your questions in an informative way, even if they are open ended, challenging, or strange.  It can also analyze images and potentially other forms of data in the future.
 
-* **Scalability and Efficiency:**  Gemini is built to be highly scalable, meaning it can be adapted and deployed for various applications and tasks.  Google also focuses on its efficiency, aiming for optimal performance with lower computational costs.
+    * **Reasoning and Problem-Solving:** Google emphasizes Gemini's improved reasoning abilities compared to previous models.  This allows it to tackle more complex tasks and provide more accurate and nuanced answers.
 
-* **Integration with Google Ecosystem:**  Gemini is designed to integrate seamlessly with other Google services and products, potentially enhancing functionalities across various platforms.
+    * **Scalability and Efficiency:**  Gemini is built to be highly scalable, meaning it can be adapted and deployed for various applications and tasks.  Google also focuses on its efficiency, aiming for optimal performance with lower computational costs.
 
-
-**Different Versions/Sizes:**
-
-Google has announced different sizes or versions of Gemini, each with varying capabilities and computational resources needed to run them.  This is similar to how different GPT models (like GPT-3.5, GPT-4) exist with different strengths and weaknesses.  Larger models generally possess more capabilities but require more computational power.
-
-**Applications:**
-
-The potential applications of Gemini are vast and span various fields:
-
-* **Chatbots and Conversational AI:**  Creating more natural and engaging conversational experiences.
-* **Code Generation and Assistance:**  Helping developers write and debug code more efficiently.
-* **Content Creation:**  Assisting in writing, translating, and summarizing text.
-* **Image Understanding and Analysis:**  Analyzing images and extracting information from them.
-* **Scientific Research:**  Potentially accelerating research in various fields by analyzing large datasets.
+    * **Integration with Google Ecosystem:**  Gemini is designed to integrate seamlessly with other Google services and products, potentially enhancing functionalities across various platforms.
 
 
-**Limitations:**
+    **Different Versions/Sizes:**
 
-Despite its advancements, Gemini, like all large language models, has limitations:
+    Google has announced different sizes or versions of Gemini, each with varying capabilities and computational resources needed to run them.  This is similar to how different GPT models (like GPT-3.5, GPT-4) exist with different strengths and weaknesses.  Larger models generally possess more capabilities but require more computational power.
 
-* **Bias and Safety Concerns:**  Large language models can inherit biases present in the data they are trained on.  Addressing these biases and ensuring safe and responsible use is crucial.
-* **Hallucinations:**  The model might sometimes generate incorrect or nonsensical information, a phenomenon known as "hallucination."
-* **Computational Cost:**  Running large models like Gemini requires significant computational resources, making it expensive to deploy and maintain.
+    **Applications:**
+
+    The potential applications of Gemini are vast and span various fields:
+
+    * **Chatbots and Conversational AI:**  Creating more natural and engaging conversational experiences.
+    * **Code Generation and Assistance:**  Helping developers write and debug code more efficiently.
+    * **Content Creation:**  Assisting in writing, translating, and summarizing text.
+    * **Image Understanding and Analysis:**  Analyzing images and extracting information from them.
+    * **Scientific Research:**  Potentially accelerating research in various fields by analyzing large datasets.
 
 
-**In summary:**
+    **Limitations:**
 
-Gemini represents a significant advancement in AI technology, offering a multimodal approach with improved reasoning capabilities.  Its potential applications are vast, but it's important to be aware of its limitations and the ongoing challenges in developing and deploying responsible AI.  Google's ongoing development and refinements of Gemini will likely further expand its capabilities and address its limitations over time.
+    Despite its advancements, Gemini, like all large language models, has limitations:
 
-</pre>
+    * **Bias and Safety Concerns:**  Large language models can inherit biases present in the data they are trained on.  Addressing these biases and ensuring safe and responsible use is crucial.
+    * **Hallucinations:**  The model might sometimes generate incorrect or nonsensical information, a phenomenon known as "hallucination."
+    * **Computational Cost:**  Running large models like Gemini requires significant computational resources, making it expensive to deploy and maintain.
+
+
+    **In summary:**
+
+    Gemini represents a significant advancement in AI technology, offering a multimodal approach with improved reasoning capabilities.  Its potential applications are vast, but it's important to be aware of its limitations and the ongoing challenges in developing and deploying responsible AI.  Google's ongoing development and refinements of Gemini will likely further expand its capabilities and address its limitations over time.
+
+
 
 ## Streaming and Batching
 
 `ChatGoogleGenerativeAI` natively supports streaming and batching. Below is an example.
+
 
 ```python
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -235,39 +254,40 @@ for chunk in llm.stream("Can you recommend 5 travel destinations in California?"
     print(chunk.content)
     print("---")
 ```
-<pre class="custom">California
----
- offers a diverse range of experiences. Here are 5 travel destinations, each offering
----
- something different:
 
-1. **Yosemite National Park (Nature & Hiking
----
-):** Iconic granite cliffs, giant sequoia trees, waterfalls, and challenging hikes make this a classic California experience.  Best for those who enjoy outdoor activities and
----
- stunning natural beauty.
+    California
+    ---
+     offers a diverse range of experiences. Here are 5 travel destinations, each offering
+    ---
+     something different:
 
-2. **San Francisco (City & Culture):** A vibrant city with iconic landmarks like the Golden Gate Bridge, Alcatraz Island,
----
- and cable cars. Offers a blend of history, culture, diverse food scenes, and a bustling atmosphere.
+    1. **Yosemite National Park (Nature & Hiking
+    ---
+    ):** Iconic granite cliffs, giant sequoia trees, waterfalls, and challenging hikes make this a classic California experience.  Best for those who enjoy outdoor activities and
+    ---
+     stunning natural beauty.
 
-3. **Santa Barbara (Beach & Relaxation):**  A charming coastal city with beautiful beaches, Spanish architecture, and a relaxed
----
- atmosphere. Perfect for those seeking a more laid-back vacation with opportunities for swimming, sunbathing, and exploring a quaint town.
+    2. **San Francisco (City & Culture):** A vibrant city with iconic landmarks like the Golden Gate Bridge, Alcatraz Island,
+    ---
+     and cable cars. Offers a blend of history, culture, diverse food scenes, and a bustling atmosphere.
 
-4. **Joshua Tree National Park (Desert & Stargazing):** Unique desert landscape with bizarre rock
----
- formations, Joshua trees, and incredible stargazing opportunities. Ideal for those who appreciate unusual scenery and enjoy hiking and photography.
+    3. **Santa Barbara (Beach & Relaxation):**  A charming coastal city with beautiful beaches, Spanish architecture, and a relaxed
+    ---
+     atmosphere. Perfect for those seeking a more laid-back vacation with opportunities for swimming, sunbathing, and exploring a quaint town.
 
-5. **Napa Valley (Wine Country & Gastronomy):** World-renowned wine region with rolling vineyards, charming towns, and luxurious resorts. Perfect for wine enthusiasts, foodies,
----
- and those seeking a relaxing getaway with opportunities for wine tasting and gourmet dining.
+    4. **Joshua Tree National Park (Desert & Stargazing):** Unique desert landscape with bizarre rock
+    ---
+     formations, Joshua trees, and incredible stargazing opportunities. Ideal for those who appreciate unusual scenery and enjoy hiking and photography.
+
+    5. **Napa Valley (Wine Country & Gastronomy):** World-renowned wine region with rolling vineyards, charming towns, and luxurious resorts. Perfect for wine enthusiasts, foodies,
+    ---
+     and those seeking a relaxing getaway with opportunities for wine tasting and gourmet dining.
 
 
-These are just suggestions, and the best destination for you will depend on your interests and travel style.
+    These are just suggestions, and the best destination for you will depend on your interests and travel style.
 
----
-</pre>
+    ---
+
 
 
 ```python
@@ -287,11 +307,12 @@ results = llm.batch(
 for res in results:
     print(res.content)
 ```
-<pre class="custom">The capital of the United States is **Washington, D.C.**
 
-The capital of South Korea is **Seoul**.
+    The capital of the United States is **Washington, D.C.**
 
-</pre>
+    The capital of South Korea is **Seoul**.
+
+
 
 ## Multimodeal Model
 
@@ -303,6 +324,7 @@ To provide an image, pass a human message with contents of type `List[dict]`, wh
 - A base64 encoded image (e.g., `data:image/png;base64,abcd124`)
 - A PIL image
 
+
 ```python
 # CASE - A pulbic image URL
 import requests
@@ -312,7 +334,15 @@ image_url = "https://picsum.photos/seed/picsum/300/300"
 content = requests.get(image_url).content
 Image(content)
 ```
-<pre class="custom"><IPython.core.display.Image object></pre>
+
+
+
+
+
+![jpeg](output_17_0.jpg)
+
+
+
 
 
 ```python
@@ -333,6 +363,5 @@ message = HumanMessage(
 response = llm.invoke([message])
 print(response.content)
 ```
-<pre class="custom">That's a picture of the Matterhorn mountain in Switzerland.  The image shows the iconic pyramidal peak covered in snow, set against a dramatic, softly colored sunset or sunrise sky.  The foreground features a gently sloping snow-covered landscape.
 
-</pre>
+    That's a picture of the Matterhorn mountain in Switzerland.  The image shows the iconic pyramidal peak covered in snow, set against a dramatic, softly colored sunset or sunrise sky.  The foreground features a gently sloping snow-covered landscape.

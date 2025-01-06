@@ -4,25 +4,15 @@ import argparse
 from typing import List, Dict, Any, Optional
 
 
-def get_default_css() -> str:
+def get_default_css(css_filename: str) -> str:
     """기본 CSS 스타일을 반환합니다."""
-    return """<style>
-    .custom {
-        background-color: #008d8d;
-        color: white;
-        padding: 0.25em 0.5em 0.25em 0.5em;
-        white-space: pre-wrap;       /* css-3 */
-        white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-        white-space: -pre-wrap;      /* Opera 4-6 */
-        white-space: -o-pre-wrap;    /* Opera 7 */
-        word-wrap: break-word;    
-    }
-    
-    pre {
-        background-color: #027c7c;
-        padding-left: 0.5em;
-    }
-</style>"""
+    try:
+        with open(css_filename, "r", encoding="utf-8") as f:
+            css_content = f.read()
+        return f"<style>\n{css_content}\n</style>"
+    except FileNotFoundError:
+        print("Could not find styles.css file.")
+        return ""
 
 
 def _read_notebook_file(filename: str) -> Dict[str, Any]:
@@ -92,7 +82,7 @@ def _process_code_cell(cell: Dict[str, Any], cells: List[str]) -> None:
         cells.append("```\n\n")
 
 
-def _convert_markdown_from_notebook(filename: str, output_filename: str) -> str:
+def _process_converter(filename: str, output_filename: str, css_filename: str) -> str:
     """노트북을 마크다운으로 변환합니다."""
     notebook = _read_notebook_file(filename)
     cells: List[str] = []
@@ -103,8 +93,10 @@ def _convert_markdown_from_notebook(filename: str, output_filename: str) -> str:
         elif cell["cell_type"] == "markdown":
             cells.extend(cell["source"])
             cells.append("\n")
+        else:
+            print(f"Unknown cell type. Verification Needed. file : {filename}")
 
-    final_output = f"{get_default_css()}\n\n{''.join(cells)}"
+    final_output = f"{get_default_css(css_filename)}\n\n{''.join(cells)}"
 
     with open(output_filename, "w") as f:
         f.write(final_output)
@@ -113,13 +105,15 @@ def _convert_markdown_from_notebook(filename: str, output_filename: str) -> str:
 
 
 def convert_markdown_from_notebook(
-    filename: str, post_fix: str = "-(NEED-REVIEW)"
+    filename: str,
+    css_filename: str = "css/styles.css",
+    post_fix: str = "-(NEED-REVIEW)",
 ) -> str:
     """노트북 파일을 마크다운으로 변환하는 메인 함수입니다."""
 
     output_filename = filename.replace(".ipynb", f"{post_fix}.md")
 
-    return _convert_markdown_from_notebook(filename, output_filename)
+    return _process_converter(filename, output_filename, css_filename)
 
 
 if __name__ == "__main__":
@@ -129,6 +123,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--filename", required=True, help="변환할 주피터 노트북 파일 경로"
     )
+    parser.add_argument("--css", default="css/styles.css", help="css file path")
     args = parser.parse_args()
 
     convert_markdown_from_notebook(args.filename)
