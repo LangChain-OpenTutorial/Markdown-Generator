@@ -1,19 +1,19 @@
 <style>
-    .custom {
-        background-color: #008d8d;
-        color: white;
-        padding: 0.25em 0.5em 0.25em 0.5em;
-        white-space: pre-wrap;       /* css-3 */
-        white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-        white-space: -pre-wrap;      /* Opera 4-6 */
-        white-space: -o-pre-wrap;    /* Opera 7 */
-        word-wrap: break-word;
-    }
+.custom {
+    background-color: #008d8d;
+    color: white;
+    padding: 0.25em 0.5em 0.25em 0.5em;
+    white-space: pre-wrap;       /* css-3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;
+}
 
-    pre {
-        background-color: #027c7c;
-        padding-left: 0.5em;
-    }
+pre {
+    background-color: #027c7c;
+    padding-left: 0.5em;
+}
 </style>
 
 # Google Generative AI
@@ -27,7 +27,7 @@
 
 ## Overview
 
-You can use the `ChatGoogleGenerativeAI` class from the [langchain-google-genai](https://pypi.org/project/langchain-google-genai/) integration package to access not only Google AIâ€™s `gemini` and `gemini-vision` models, but also other generative models.
+You can use the `ChatGoogleGenerativeAI` class from the [langchain-google-genai](https://pypi.org/project/langchain-google-genai/) integration package to access not only Google AI¡¯s `gemini` and `gemini-vision` models, but also other generative models.
 
 ### Table of Contents
 
@@ -106,7 +106,7 @@ load_dotenv(override=True)
 
 Import the `ChatGoogleGenerativeAI` class from the `langchain_google_genai` package.
 
-The `ChatGoogleGenerativeAI` class is used to implement conversational AI systems using Googleâ€™s Generative AI models. Through this class, users can interact with Googleâ€™s conversational AI model. Conversations with the model take place in a chat format, and the model generates appropriate responses based on user input.
+The `ChatGoogleGenerativeAI` class is used to implement conversational AI systems using Google¡¯s Generative AI models. Through this class, users can interact with Google¡¯s conversational AI model. Conversations with the model take place in a chat format, and the model generates appropriate responses based on user input.
 
 Because the `ChatGoogleGenerativeAI` class is integrated with the LangChain framework, it can be used alongside other LangChain components.
 
