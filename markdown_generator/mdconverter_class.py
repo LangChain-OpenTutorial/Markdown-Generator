@@ -1,7 +1,7 @@
 import os
 import re
 import shutil
-from mdconverter.mdconverter import get_default_css
+from .mdconverter import get_default_css
 from nbconvert import MarkdownExporter
 from nbconvert.preprocessors import Preprocessor
 import nbformat
@@ -66,7 +66,9 @@ class Ndconverter:
 
     def _save_script(self) -> None:
         """Save the converted script"""
-        output_filename = self.filename.replace(".ipynb", f"{self.post_fix}.md")
+        output_filename = os.path.join(
+            "./docs", self.filename.replace(".ipynb", f"{self.post_fix}.md")
+        )
         print(f"Saving file : {output_filename}")
         with open(output_filename, "w", encoding="utf-8") as f:
             f.write(self.ndconverter_script)
@@ -107,20 +109,21 @@ class CustomMdconverter(Ndconverter):
         self._extracting_img_path()
         if self.resources.get("outputs"):
             self._process_output_images()
+        self._process_markdown_images_pattern()
 
     def _extracting_img_path(self) -> None:
         """Set image directory path"""
         folder_name = os.path.dirname(self.filename)
-        self.img_dir = os.path.join(folder_name, "img")
+        self.img_dir = os.path.join("./docs", folder_name, "img")
         os.makedirs(self.img_dir, exist_ok=True)
-        print(f"Setting image dir : {self.img_dir}")
+        print(f"Making image dir : {self.img_dir}")
 
     def _process_output_images(self) -> None:
         """Save image files and update paths"""
         for img_filename, image_data in self.resources["outputs"].items():
             img_path = os.path.join(self.img_dir, img_filename)
             self._save_image(img_path, image_data)
-            self._update_image_path(img_filename, img_path)
+            self._update_image_path(img_filename, f"./img/{img_filename}")
 
     def _save_image(self, img_path: str, image_data: bytes) -> None:
         """Save image file"""
@@ -161,7 +164,7 @@ class CustomMdconverter(Ndconverter):
 
         if os.path.exists(abs_old_path):
             shutil.copy2(abs_old_path, new_path)
-            self._update_markdown_image_path(desc, old_path, new_path)
+            self._update_markdown_image_path(desc, old_path, f"./img/{filename}")
 
     def _get_absolute_path(self, old_path: str) -> str:
         """Convert relative path to absolute path"""
