@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="markdown-generator",
+    name="mdconverter",
     version="0.1.0",
     description="Converter from Jupyter Notebook(.ipynb) to Markdown(.md)",
     author="sooyoung-wind, teddylee777",
