@@ -14,6 +14,7 @@ pre {
     background-color: #027c7c;
     padding-left: 0.5em;
 }
+
 </style>
 
 # Google Generative AI
@@ -52,12 +53,10 @@ Set up the environment. You may refer to [Environment Setup](https://wikidocs.ne
 - `langchain-opentutorial` is a package that provides a set of easy-to-use environment setup, useful functions and utilities for tutorials.
 - You can checkout the [`langchain-opentutorial`](https://github.com/LangChain-OpenTutorial/langchain-opentutorial-pypi) for more details.
 
-
 ```python
 %%capture --no-stderr
 !pip install langchain-opentutorial
 ```
-
 
 ```python
 # Install required packages
@@ -72,7 +71,6 @@ package.install(
     upgrade=False,
 )
 ```
-
 
 ```python
 # Set environment variables
@@ -101,7 +99,6 @@ You can alternatively set `GOOGLE_API_KEY` in `.env` file and load it.
 
 [Note] This is not necessary if you've already set `GOOGLE_API_KEY` in previous steps.
 
-
 ```python
 from dotenv import load_dotenv
 
@@ -125,7 +122,6 @@ Because the `ChatGoogleGenerativeAI` class is integrated with the LangChain fram
 
 For information about supported models, see: https://ai.google.dev/gemini-api/docs/models/gemini?hl=en
 
-
 ```python
 from langchain_google_genai import ChatGoogleGenerativeAI
 
@@ -141,7 +137,6 @@ for token in answer:
 ```
 
     LangChain is a framework for developing applications powered by large language models (LLMs).  It simplifies building applications by connecting LLMs to other sources of data and computation.  This enables creation of sophisticated chains of prompts and actions, going beyond single LLM calls.
-
 
 
 ```python
@@ -169,7 +164,6 @@ print(response.content)
 ## Safety Settings
 
 Gemini models have default safety settings that can be overridden. If you are receiving lots of "Safety Warnings" from your models, you can try tweaking the `safety_settings` attribute of the model. For example, to turn off safety blocking for dangerous content, you can construct your LLM as follows:
-
 
 ```python
 from langchain_google_genai import (
@@ -242,7 +236,6 @@ print(response.content)
 
 `ChatGoogleGenerativeAI` natively supports streaming and batching. Below is an example.
 
-
 ```python
 from langchain_google_genai import ChatGoogleGenerativeAI
 
@@ -289,7 +282,6 @@ for chunk in llm.stream("Can you recommend 5 travel destinations in California?"
     ---
 
 
-
 ```python
 from langchain_google_genai import ChatGoogleGenerativeAI
 
@@ -324,7 +316,6 @@ To provide an image, pass a human message with contents of type `List[dict]`, wh
 - A base64 encoded image (e.g., `data:image/png;base64,abcd124`)
 - A PIL image
 
-
 ```python
 # CASE - A pulbic image URL
 import requests
@@ -339,8 +330,7 @@ Image(content)
 
 
 
-![jpeg](output_17_0.jpg)
-
+![jpeg](sample\img\output_17_0.jpg)
 
 
 
