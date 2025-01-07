@@ -27,7 +27,7 @@ pre {
 
 ## Overview
 
-You can use the `ChatGoogleGenerativeAI` class from the [langchain-google-genai](https://pypi.org/project/langchain-google-genai/) integration package to access not only Google AI¡¯s `gemini` and `gemini-vision` models, but also other generative models.
+You can use the `ChatGoogleGenerativeAI` class from the [langchain-google-genai](https://pypi.org/project/langchain-google-genai/) integration package to access not only Google AIï¿½ï¿½s `gemini` and `gemini-vision` models, but also other generative models.
 
 ### Table of Contents
 
@@ -106,7 +106,7 @@ load_dotenv(override=True)
 
 Import the `ChatGoogleGenerativeAI` class from the `langchain_google_genai` package.
 
-The `ChatGoogleGenerativeAI` class is used to implement conversational AI systems using Google¡¯s Generative AI models. Through this class, users can interact with Google¡¯s conversational AI model. Conversations with the model take place in a chat format, and the model generates appropriate responses based on user input.
+The `ChatGoogleGenerativeAI` class is used to implement conversational AI systems using Googleï¿½ï¿½s Generative AI models. Through this class, users can interact with Googleï¿½ï¿½s conversational AI model. Conversations with the model take place in a chat format, and the model generates appropriate responses based on user input.
 
 Because the `ChatGoogleGenerativeAI` class is integrated with the LangChain framework, it can be used alongside other LangChain components.
 
