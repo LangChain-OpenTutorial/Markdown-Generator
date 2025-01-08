@@ -46,6 +46,7 @@ class Ndconverter:
         self._load_ipynb()  # make notebook_content
         self._markdown_exporter()  # make script, resources
         self.ndconverter_script = self._add_prefix_css()
+        self._replace_pre_tag()
         if save_on:
             self._save_script()
 
@@ -63,6 +64,12 @@ class Ndconverter:
     def _add_prefix_css(self) -> str:
         """Add CSS content to the beginning of the Markdown script"""
         return f"{get_default_css(self.css_filename)}\n\n{self.script}"
+
+    def _replace_pre_tag(self) -> None:
+        formatted_text = self.ndconverter_script.replace(
+            '    <pre class="custom">', '<pre class="custom">'
+        )
+        self.ndconverter_script = formatted_text.replace("    </pre>", "</pre>")
 
     def _save_script(self) -> None:
         """Save the converted script"""
@@ -83,8 +90,33 @@ class CustomPreprocessor(Preprocessor):
             pass
         elif cell.get("cell_type", "") == "code":
             # code
-            pass
+            cell = self._process_text_plain_output(cell)
+            cell = self._process_stream_output(cell)
         return cell, resources
+
+    def _process_stream_output(self, cell):
+        """Process stream output by wrapping it in custom HTML tags"""
+        try:
+            if cell["outputs"][0]["output_type"] == "stream":
+                stream_text = "".join(cell["outputs"][0]["text"])
+                formatted_output = f"""<pre class="custom">{stream_text}</pre>"""
+                cell["outputs"][0]["text"] = formatted_output.strip()
+
+            return cell
+
+        except:
+            return cell
+
+    def _process_text_plain_output(self, cell):
+        """Process text/plain output by wrapping it in custom HTML tags"""
+        try:
+            output_text = "".join(cell["outputs"][0]["data"]["text/plain"])
+            formatted_output = f"""<pre class="custom">{output_text}</pre>"""
+            cell["outputs"][0]["data"]["text/plain"] = formatted_output.strip()
+            return cell
+
+        except:
+            return cell
 
 
 class CustomMdconverter(Ndconverter):
