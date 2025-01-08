@@ -250,6 +250,7 @@ class MultiNdconverter(CustomMdconverter):
                 ]
             except:
                 python_version = "Unkown"
+
             markdown_count = sum(
                 1
                 for cell in self.notebook_content["cells"]
