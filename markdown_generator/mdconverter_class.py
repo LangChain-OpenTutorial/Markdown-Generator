@@ -5,6 +5,7 @@ from .mdconverter import get_default_css
 from nbconvert import MarkdownExporter
 from nbconvert.preprocessors import Preprocessor
 import nbformat
+import matplotlib.pyplot as plt
 
 
 class Ndconverter:
@@ -220,6 +221,13 @@ class MultiNdconverter(CustomMdconverter):
     def __init__(self, filenames: list) -> None:
         super().__init__()
         self.filenames = filenames
+        self.static = self._init_static_dict(
+            keys=["python_counts", "markdown_counts", "code_counts", "total_counts"]
+        )
+
+    def _init_static_dict(self, keys: list[str]) -> dict:
+        """Initialize a dictionary with given keys and empty dictionaries as values."""
+        return {key: {} for key in keys}
 
     def add_file(self, filename: str) -> None:
         """Add file to convert"""
@@ -230,3 +238,65 @@ class MultiNdconverter(CustomMdconverter):
         for filename in self.filenames:
             self.filename = filename
             super().run(save_on)
+
+    def cal_static(self) -> None:
+        for filename in self.filenames:
+            self.filename = filename
+            super()._load_ipynb()  # self.notebook_content
+
+            try:
+                python_version = self.notebook_content["metadata"]["language_info"][
+                    "version"
+                ]
+            except:
+                python_version = "Unkown"
+            markdown_count = sum(
+                1
+                for cell in self.notebook_content["cells"]
+                if cell["cell_type"] == "markdown"
+            )
+            code_count = sum(
+                1
+                for cell in self.notebook_content["cells"]
+                if cell["cell_type"] == "code"
+            )
+            total_count = markdown_count + code_count
+
+            self._increment_count(python_version, self.static["python_counts"])
+            self._increment_count(markdown_count, self.static["markdown_counts"])
+            self._increment_count(code_count, self.static["code_counts"])
+            self._increment_count(total_count, self.static["total_counts"])
+
+        self.static = self.sort_dict_by_keys(self.static)
+
+    @staticmethod
+    def _increment_count(key: str, count_dict: dict) -> None:
+        """Increment count for a key in the given dictionary."""
+        count_dict[key] = count_dict.get(key, 0) + 1
+
+    def sort_dict_by_keys(self, input_dict):
+        return {key: dict(sorted(value.items())) for key, value in input_dict.items()}
+
+    def plot_static_data(self, category: str) -> None:
+        if category not in self.static:
+            print(f"Category '{category}' not found in data.")
+            return
+
+        counts = self.static[category]
+        keys = list(counts.keys())
+        values = list(map(int, counts.values()))
+
+        # Plot the data
+        plt.figure(figsize=(10, 6))
+        plt.bar(keys, values)
+
+        # Customize the chart
+        plt.title(f"Counts for {category}")
+        plt.xlabel("The number of cells")
+        plt.ylabel("Counts")
+        plt.xticks(rotation=45, ha="right")
+        plt.grid(axis="y", linestyle="--", alpha=0.7)
+
+        # Show the chart
+        plt.tight_layout()
+        plt.show()
