@@ -244,9 +244,13 @@ class MultiNdconverter(CustomMdconverter):
             self.filename = filename
             super()._load_ipynb()  # self.notebook_content
 
-            python_version = self.notebook_content["metadata"]["language_info"][
-                "version"
-            ]
+            try:
+                python_version = self.notebook_content["metadata"]["language_info"][
+                    "version"
+                ]
+            except:
+                python_version = "Unkown"
+
             markdown_count = sum(
                 1
                 for cell in self.notebook_content["cells"]
@@ -264,10 +268,15 @@ class MultiNdconverter(CustomMdconverter):
             self._increment_count(code_count, self.static["code_counts"])
             self._increment_count(total_count, self.static["total_counts"])
 
+        self.static = self.sort_dict_by_keys(self.static)
+
     @staticmethod
     def _increment_count(key: str, count_dict: dict) -> None:
         """Increment count for a key in the given dictionary."""
-        count_dict[str(key)] = count_dict.get(str(key), 0) + 1
+        count_dict[key] = count_dict.get(key, 0) + 1
+
+    def sort_dict_by_keys(self, input_dict):
+        return {key: dict(sorted(value.items())) for key, value in input_dict.items()}
 
     def plot_static_data(self, category: str) -> None:
         if category not in self.static:
@@ -284,7 +293,7 @@ class MultiNdconverter(CustomMdconverter):
 
         # Customize the chart
         plt.title(f"Counts for {category}")
-        plt.xlabel("Keys")
+        plt.xlabel("The number of cells")
         plt.ylabel("Counts")
         plt.xticks(rotation=45, ha="right")
         plt.grid(axis="y", linestyle="--", alpha=0.7)
