@@ -87,8 +87,8 @@ set_env(
 )
 ```
 
-    Environment variables have been set successfully.
-
+<pre class="custom">Environment variables have been set successfully.
+</pre>
 
 ## Create API Key
 
@@ -108,7 +108,7 @@ load_dotenv(override=True)
 
 
 
-    True
+<pre class="custom">True</pre>
 
 
 
@@ -136,8 +136,8 @@ for token in answer:
     print(token.content, end="", flush=True)
 ```
 
-    LangChain is a framework for developing applications powered by large language models (LLMs).  It simplifies building applications by connecting LLMs to other sources of data and computation.  This enables creation of sophisticated chains of prompts and actions, going beyond single LLM calls.
-
+<pre class="custom">LangChain is a framework for developing applications powered by large language models (LLMs).  It simplifies building applications by connecting LLMs to other sources of data and computation.  This enables creation of sophisticated chains of prompts and actions, going beyond single LLM calls.
+</pre>
 
 ```python
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -157,9 +157,9 @@ response = chain.invoke({"question": "Apple"})
 print(response.content)
 ```
 
-    Yes
+<pre class="custom">Yes
 
-
+</pre>
 
 ## Safety Settings
 
@@ -189,7 +189,7 @@ response = llm.invoke("Please explain about Gemini model")
 print(response.content)
 ```
 
-    Gemini is Google's large multimodal AI model, designed to handle various types of information, including text, code, audio, and images.  It's positioned as a competitor to OpenAI's GPT models and aims to be a more versatile and powerful tool.  Here's a breakdown of key aspects:
+<pre class="custom">Gemini is Google's large multimodal AI model, designed to handle various types of information, including text, code, audio, and images.  It's positioned as a competitor to OpenAI's GPT models and aims to be a more versatile and powerful tool.  Here's a breakdown of key aspects:
 
     **Key Features and Capabilities:**
 
@@ -230,7 +230,7 @@ print(response.content)
 
     Gemini represents a significant advancement in AI technology, offering a multimodal approach with improved reasoning capabilities.  Its potential applications are vast, but it's important to be aware of its limitations and the ongoing challenges in developing and deploying responsible AI.  Google's ongoing development and refinements of Gemini will likely further expand its capabilities and address its limitations over time.
 
-
+</pre>
 
 ## Streaming and Batching
 
@@ -248,7 +248,7 @@ for chunk in llm.stream("Can you recommend 5 travel destinations in California?"
     print("---")
 ```
 
-    California
+<pre class="custom">California
     ---
      offers a diverse range of experiences. Here are 5 travel destinations, each offering
     ---
@@ -280,7 +280,7 @@ for chunk in llm.stream("Can you recommend 5 travel destinations in California?"
     These are just suggestions, and the best destination for you will depend on your interests and travel style.
 
     ---
-
+</pre>
 
 ```python
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -300,11 +300,11 @@ for res in results:
     print(res.content)
 ```
 
-    The capital of the United States is **Washington, D.C.**
+<pre class="custom">The capital of the United States is **Washington, D.C.**
 
     The capital of South Korea is **Seoul**.
 
-
+</pre>
 
 ## Multimodeal Model
 
@@ -354,4 +354,6 @@ response = llm.invoke([message])
 print(response.content)
 ```
 
-    That's a picture of the Matterhorn mountain in Switzerland.  The image shows the iconic pyramidal peak covered in snow, set against a dramatic, softly colored sunset or sunrise sky.  The foreground features a gently sloping snow-covered landscape.
+<pre class="custom">That's a picture of the Matterhorn mountain in Switzerland.  The image shows the iconic pyramidal peak covered in snow, set against a dramatic, softly colored sunset or sunrise sky.  The foreground features a gently sloping snow-covered landscape.
+
+</pre>
