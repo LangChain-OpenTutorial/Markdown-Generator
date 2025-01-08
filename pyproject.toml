@@ -12,6 +12,7 @@ readme = "README.md"
 python = "^3.11"
 pre-commit = "^4.0.1"
 nbconvert = "^7.16.5"
+matplotlib = "^3.10.0"
 
 
 [tool.poetry.group.dev.dependencies]
