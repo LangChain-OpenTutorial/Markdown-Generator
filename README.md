@@ -12,7 +12,7 @@ from markdown_generator.mdconverter_class import MultiNdconverter
 file_list = ['04-Model\\06-GoogleGenerativeAI.ipynb'] # 리스트 형식으로 파일 경로
 app = MultiNdconverter(filenames=file_list)
 app.css_filename = "../css/styles.css" # css 파일 설정
-app.post_fix = "-(CHECK)" # option
+app.post_fix = "-(CEHCK)" # option
 app.run()
 ```
 
