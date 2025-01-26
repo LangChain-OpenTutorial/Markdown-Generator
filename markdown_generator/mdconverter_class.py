@@ -136,6 +136,11 @@ class CustomMdconverter(Ndconverter):
 
         self.script, self.resources = exporter.from_notebook_node(self.notebook_content)
         self._setup_image_processing()
+        self._remove_ansi_escape_codes()
+
+    def _remove_ansi_escape_codes(self) -> None:
+        ANSI_ESCAPE_PATTERN = re.compile(r"\x1B\[[0-?]*[ -/]*[@-~]")
+        self.script = ANSI_ESCAPE_PATTERN.sub("", self.script)
 
     def _setup_image_processing(self) -> None:
         """Set up image processing"""
@@ -184,7 +189,12 @@ class CustomMdconverter(Ndconverter):
 
     def _process_markdown_images_pattern(self) -> None:
         """Handle Markdown image patterns"""
-        pattern = r"!\[([^\]]+)\]\((\.\/assets\/[^)]+)\)"
+        pattern = r"!\[([^\]]*)\]\((\.\/assets\/[^)]+)\)"
+        for match in re.finditer(pattern, self.script):
+            desc, old_path = match.groups()
+            self._process_markdown_image(desc, old_path)
+
+        pattern = r"!\[([^\]]*)\]\((assets\/[^)]+)\)"
         for match in re.finditer(pattern, self.script):
             desc, old_path = match.groups()
             self._process_markdown_image(desc, old_path)
